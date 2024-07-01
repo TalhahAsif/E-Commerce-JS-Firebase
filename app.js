@@ -5,13 +5,14 @@ import {
   onAuthStateChanged,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyB1vHKXx2fq4_n3SovJ3lN4fUmu0MTcezQ",
   authDomain: "my-1001-project.firebaseapp.com",
   projectId: "my-1001-project",
-  storageBucket: "my-1001-project.appspot.com", 
+  storageBucket: "my-1001-project.appspot.com",
   messagingSenderId: "805674283226",
   appId: "1:805674283226:web:50a6b83d0d5ece8bb1f5e3",
   measurementId: "G-SXZTJF026S",
@@ -22,9 +23,9 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 
-let signUpPageDisplay = true;
+let signUpPageDisplay = false;
 let loginPageDisplay = false;
-let mainPageDisplay = false;
+let mainPageDisplay = true;
 
 let signUpPage = document.getElementById("signUpPage");
 let loginPage = document.getElementById("LoginPage");
@@ -54,6 +55,8 @@ const routing = () => {
   }
 };
 
+routing();
+
 loginLink.addEventListener("click", () => {
   loginPageDisplay = true;
   signUpPageDisplay = false;
@@ -65,14 +68,12 @@ signUpLink.addEventListener("click", () => {
   loginPageDisplay = false;
   signUpPageDisplay = true;
   mainPageDisplay = false;
-  routing();   
+  routing();
 });
 
 const signInEmail = document.getElementById("signInEmail");
 const signInPassword = document.getElementById("signInPassword");
 const signupBTN = document.getElementById("signupBTN");
-
-const newUserEmail = "";
 
 signupBTN.addEventListener("click", createUserAccount);
 
@@ -80,7 +81,7 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log("User is Logged in");
     const uid = user.uid;
-    } else {
+  } else {
     console.log("User is not Logged in");
   }
 });
@@ -92,9 +93,8 @@ function createUserAccount() {
       const user = userCredential.user;
       signUpPageDisplay = false;
       mainPageDisplay = true;
-      routing()
-      alert("Account Created"); 
-    
+      routing();
+      alert("Account Created");
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -103,16 +103,39 @@ function createUserAccount() {
     });
 }
 
-signInWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed in 
-    const user = userCredential.user;
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-  });   
+const loginEmail = document.getElementById("LoginEmail");
+const loginPassword = document.getElementById("LoginPassword");
+const loginBTN = document.getElementById("LoginBTN");
 
+loginBTN.addEventListener("click", loginUser)
 
-routing();
+function loginUser() {
+  signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value)
+    .then((userCredential) => {
+      // Signed in
+      const user = userCredential.user;
+      loginPageDisplay = false;
+      mainPageDisplay = true;
+      routing()
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      alert(errorMessage)
+    });
+}
+ 
+const logOutBTN = document.getElementById("LogOutBTN")
+
+logOutBTN.addEventListener("click", logout)
+
+function logout(){
+  signOut(auth).then(() => {
+    // Sign-out successful.
+    loginPageDisplay = true;
+    mainPageDisplay = false;
+    routing()
+  }).catch((error) => {
+    // An error happened.
+  });
+}
