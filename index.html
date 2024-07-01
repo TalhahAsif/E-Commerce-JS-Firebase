@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-slate-950 text-gray-400">
+    <!-- ///////////////////////Sign Up Page//////////////////////// -->
+
+    <section id="signUpPage">
+      <div class="flex justify-center items-center h-screen w-screen">
+        <div class="p-6 w-1/2 rounded-lg bg-transparent">
+          <p class="text-center text-3xl m-6 mb-5 font-bold">Sign up</p>
+          <div class="flex flex-col mt-6">
+            <!-- <label for="signInemail">Email</label> -->
+            <input
+              id="signInEmail"
+              type="email"
+              class="bg-black p-3 m-2 rounded text-white"
+              placeholder="Email"
+            />
+            <!-- <label for="signInPassword">Password</label> -->
+            <input
+              id="signInPassword"
+              type="password"
+              class="bg-black p-3 m-2 rounded text-white"
+              placeholder="Password"
+            />
+          </div>
+
+          <div class="m-2 mt-6">
+            <button
+              id="signupBTN"
+              type="submit"
+              class="font-bold btn text-black p-2 rounded-lg w-52 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500"
+            >
+              Sign Up
+            </button>
+            <p id="loginLink" class="cursor-pointer mt-3">Do not have Account? Click here</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ///////////////////////Login Page//////////////////////// -->
+
+    <section id="LoginPage">
+      <div class="flex justify-center items-center h-screen w-screen">
+        <div class="p-6 w-1/2 rounded-lg bg-transparent">
+          <p class="text-center text-3xl m-6 mb-5 font-bold">LogIn</p>
+          <div class="flex flex-col mt-6">
+            <!-- <label for="signInemail">Email</label> -->
+            <input
+              id="LoginEmail"
+              type="email"
+              class="bg-black p-3 m-2 rounded text-white"
+              placeholder="Email"
+            />
+            <!-- <label for="signInPassword">Password</label> -->
+            <input
+              id="LoginPassword"
+              type="password"
+              class="bg-black p-3 m-2 rounded text-white"
+              placeholder="Password"
+            />
+          </div>
+
+          <div class="m-2 mt-6">
+            <button
+              id="LoginBTN"
+              type="submit"
+              class="font-bold btn text-black p-2 rounded-lg w-52 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500"
+            >
+              LogIn
+            </button>
+            <p id="signUpLink" class="cursor-pointer mt-3">Already have Account? Click here</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ///////////////////////Main Page//////////////////////// -->
+    <section id="mainPage">
+      <p class="text-center text-3xl m-6 mb-5 font-bold">Main Page</p>
+    </section>
+  </body>
+  <script src="app.js" type="module"></script>
+</html>
