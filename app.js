@@ -5,7 +5,7 @@ import {
   onAuthStateChanged,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut
+  signOut,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
@@ -23,9 +23,9 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 
-let signUpPageDisplay = false;
+let signUpPageDisplay = true;
 let loginPageDisplay = false;
-let mainPageDisplay = true;
+let mainPageDisplay = false;
 
 let signUpPage = document.getElementById("signUpPage");
 let loginPage = document.getElementById("LoginPage");
