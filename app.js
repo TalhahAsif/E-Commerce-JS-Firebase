@@ -23,9 +23,9 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 
-let signUpPageDisplay = true;
+let signUpPageDisplay = false;
 let loginPageDisplay = false;
-let mainPageDisplay = false;
+let mainPageDisplay = true;
 
 let signUpPage = document.getElementById("signUpPage");
 let loginPage = document.getElementById("LoginPage");
@@ -95,6 +95,8 @@ function createUserAccount() {
       mainPageDisplay = true;
       routing();
       alert("Account Created");
+      signInEmail.value = "";
+      signInPassword.value = "";
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -107,7 +109,7 @@ const loginEmail = document.getElementById("LoginEmail");
 const loginPassword = document.getElementById("LoginPassword");
 const loginBTN = document.getElementById("LoginBTN");
 
-loginBTN.addEventListener("click", loginUser)
+loginBTN.addEventListener("click", loginUser);
 
 function loginUser() {
   signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value)
@@ -116,26 +118,40 @@ function loginUser() {
       const user = userCredential.user;
       loginPageDisplay = false;
       mainPageDisplay = true;
-      routing()
+      routing();
+      loginEmail.value = "";
+      loginPassword.value = "";
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      alert(errorMessage)
+      alert(errorMessage);
     });
 }
- 
-const logOutBTN = document.getElementById("LogOutBTN")
 
-logOutBTN.addEventListener("click", logout)
+const logOutBTN = document.getElementById("LogOutBTN");
 
-function logout(){
-  signOut(auth).then(() => {
-    // Sign-out successful.
-    loginPageDisplay = true;
-    mainPageDisplay = false;
-    routing()
-  }).catch((error) => {
-    // An error happened.
-  });
+logOutBTN.addEventListener("click", logout);
+
+function logout() {
+  signOut(auth)
+    .then(() => {
+      // Sign-out successful.
+      loginPageDisplay = true;
+      mainPageDisplay = false;
+      routing();
+    })
+    .catch((error) => {
+      // An error happened.
+    });
 }
+
+// -------------------fetching Data------------------------
+
+const fetchData = () => {
+  fetch("https://fakestoreapi.com/products")
+    .then((res) => res.json())
+    .then((res) => console.log(res));
+};
+
+fetchData()
