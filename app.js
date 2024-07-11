@@ -23,9 +23,9 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 
-let signUpPageDisplay = true;
+let signUpPageDisplay = false;
 let loginPageDisplay = false;
-let mainPageDisplay = false;
+let mainPageDisplay = true;
 
 let signUpPage = document.getElementById("signUpPage");
 let loginPage = document.getElementById("LoginPage");
@@ -148,10 +148,50 @@ function logout() {
 
 // -------------------fetching Data------------------------
 
-const fetchData = () => {
-  fetch("https://fakestoreapi.com/products")
+const cardBox = document.getElementById("cardBox");
+
+const fetchData = async () => {
+  let data;
+  await fetch("https://fakestoreapi.com/products")
     .then((res) => res.json())
-    .then((res) => console.log(res));
+    .then((res) => {
+      data = res;
+    });
+
+  console.log(data);
+  console.log(data[0].description.slice(100));
+  console.log(data[0].description.length);
+  
+  data.forEach((data) => {
+
+    const card = ` <div id="card" class="rounded-2xl bg-slate-900 w-96 h-max m-3">
+    <div>
+      <img 
+        src=${data.image}
+        alt=""
+        class="w-full rounded-t-2xl h-96"
+      />
+    </div>
+    <div class="p-5">
+      <p class="text-xl font-bold">${data.title}</p>
+      <p class="text-lg font-bold">$25</p>
+      <p class="text-lg">
+        ${data.description.length > 100 ? data.description.slice(0,200): data.description}
+      </p>
+      <div class="flex items-end">
+       <button
+        id="LogOutBTN"
+        class="font-bold btn text-black p-2 rounded-lg w-full bg-sky-400 mt-6"
+      >
+        more info...
+      </button>
+      </div>
+     
+    </div>
+  </div>`;
+
+    cardBox.innerHTML += card;
+  });
 };
 
-fetchData()
+fetchData();
