@@ -5,12 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link
+    href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css"
+    rel="stylesheet"
+    />
   </head>
-  <body class="bg-slate-950 text-gray-400">
+  <body class="bg-slate-950 text-gray-400 absolute">
     <!-- ///////////////////////Sign Up Page//////////////////////// -->
 
     <section id="signUpPage">
-      <div class="flex justify-center items-center h-screen w-screen">
+      <div class="flex justify-center items-center relative h-full w-full">
         <div class="p-6 w-1/2 rounded-lg bg-transparent">
           <p class="text-center text-3xl m-6 mb-5 font-bold">Sign up</p>
           <div class="flex flex-col mt-6">
@@ -32,7 +36,7 @@
 
           <div class="m-2 mt-6">
             <button
-              id="signupBTN"
+            id="signupBTN"
               type="submit"
               class="font-bold btn text-black p-2 rounded-lg w-52 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500"
             >
@@ -47,7 +51,7 @@
     </section>
 
     <!-- ///////////////////////Login Page//////////////////////// -->
-
+    
     <section id="LoginPage">
       <div class="flex justify-center items-center h-screen w-screen">
         <div class="p-6 w-1/2 rounded-lg bg-transparent">
@@ -55,38 +59,38 @@
           <div class="flex flex-col mt-6">
             <!-- <label for="signInemail">Email</label> -->
             <input
-              id="LoginEmail"
-              type="email"
-              class="bg-black p-3 m-2 rounded text-white"
-              placeholder="Email"
+            id="LoginEmail"
+            type="email"
+            class="bg-black p-3 m-2 rounded text-white"
+            placeholder="Email"
             />
             <!-- <label for="signInPassword">Password</label> -->
             <input
-              id="LoginPassword"
+            id="LoginPassword"
               type="password"
               class="bg-black p-3 m-2 rounded text-white"
               placeholder="Password"
-            />
+              />
           </div>
 
           <div class="m-2 mt-6">
             <button
-              id="LoginBTN"
-              type="submit"
-              class="font-bold btn text-black p-2 rounded-lg w-52 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500"
+            id="LoginBTN"
+            type="submit"
+            class="font-bold btn text-black p-2 rounded-lg w-52 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500"
             >
-              LogIn
-            </button>
-            <p id="signUpLink" class="cursor-pointer mt-3">
-              Already have Account? Click here
-            </p>
-          </div>
+            LogIn
+          </button>
+          <p id="signUpLink" class="cursor-pointer mt-3">
+            Already have Account? Click here
+          </p>
+        </div>
         </div>
       </div>
     </section>
-
+    
     <!-- ///////////////////////Main Page//////////////////////// -->
-    <section id="mainPage" class="h-dvh w-full">
+    <section id="mainPage" class="h-full w-full z-0">
       <div class="flex justify-around items-center">
         <p class="text-center text-3xl m-6 mb-5 font-bold">Fake Store</p>
         <button
@@ -96,13 +100,23 @@
           LogOut
         </button>
       </div>
-
+      
       <section class="flex justify-center mt-6">
-        <div id="cardBox" class="flex flex-wrap justify-center w-3/4 mt-6">
-         
-        </div>
+        <div
+        id="cardBox"
+        class="flex flex-wrap justify-center w-3/4 mt-6"
+        ></div>
       </section>
     </section>
+    
+    <!-------------------------------------ProductPage---------------------------------------->
+
+    <div class="flex justify-center items-center relative">
+      <section id="product-page" class="border constainer rounded-lg h-dvh w-11/12 z-auto bg-red-700 hidden sticky">
+    </div>
+
+  </section>
   </body>
-  <script src="app.js" type="module"></script>
+  <script src="app.js" type= "module"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
 </html>

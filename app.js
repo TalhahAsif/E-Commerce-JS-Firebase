@@ -23,17 +23,16 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 
-let signUpPageDisplay = true;
+let signUpPageDisplay = false;
 let loginPageDisplay = false;
-let mainPageDisplay = false;
+let mainPageDisplay = true;
+let ProductPage = false;
 
 let signUpPage = document.getElementById("signUpPage");
 let loginPage = document.getElementById("LoginPage");
 let mainPage = document.getElementById("mainPage");
 const loginLink = document.getElementById("loginLink");
 const signUpLink = document.getElementById("signUpLink");
-
-console.log(signUpPage);
 
 const routing = () => {
   if (signUpPageDisplay == true) {
@@ -158,11 +157,19 @@ const fetchData = async () => {
       data = res;
     });
 
-  console.log(data);
-  console.log(data[0].description.slice(100));
-  console.log(data[0].description.length);
-  
   data.forEach((data) => {
+    const image = JSON.stringify(data.image)
+    console.log(image);
+    // const productData = [
+    //   JSON.stringify(data.id),
+    //   JSON.stringify(data.category),
+    //   JSON.stringify(data.description),
+    //   JSON.stringify(data.image),
+    //   JSON.stringify(data.price),
+    //   JSON.stringify(data.rating.count),
+    //   JSON.stringify(data.rating.rate),
+    //   JSON.stringify(data.title),
+    // ];
 
     const card = ` <div id="card" class="rounded-2xl bg-slate-900 w-96 h-max m-3">
     <div>
@@ -176,13 +183,18 @@ const fetchData = async () => {
       <p class="text-xl font-bold">${data.title}</p>
       <p class="text-lg font-bold">$25</p>
       <p class="text-lg">
-        ${data.description.length > 100 ? data.description.slice(0,200): data.description}
+        ${
+          data.description.length > 100
+            ? data.description.slice(0, 200)
+            : data.description
+        }
       </p>
-      <div class="flex items-end">
+      <div id="moreInfoBtnBox" class="flex items-end">
        <button
-        id="LogOutBTN"
-        class="font-bold btn text-black p-2 rounded-lg w-full bg-sky-400 mt-6"
-      >
+        id="${data.id}"
+        class="font-bold btn text-black p-2 rounded-lg w-full bg-sky-400 mt-6 moreInfoBtn"
+        onclick="togler(${image})"
+      > 
         more info...
       </button>
       </div>
@@ -192,6 +204,14 @@ const fetchData = async () => {
 
     cardBox.innerHTML += card;
   });
+};
+
+const productPage = document.getElementById("product-page");
+const btnBox = document.getElementById("moreInfoBtnBox");
+console.log(btnBox);
+
+window.togler = function (image) {
+  JSON.parse(image)
 };
 
 fetchData();
