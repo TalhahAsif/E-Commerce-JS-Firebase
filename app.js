@@ -157,18 +157,19 @@ const fetchData = async () => {
       data = res;
     });
 
-  data.forEach((data) => {
-    const image = JSON.stringify(data.image)
-    console.log(image);
+  data.forEach((data, index) => {
+    // const productOBJ = [data]
+    // console.log(productOBJ[0]);  
+
     // const productData = [
-    //   JSON.stringify(data.id),
-    //   JSON.stringify(data.category),
-    //   JSON.stringify(data.description),
-    //   JSON.stringify(data.image),
-    //   JSON.stringify(data.price),
-    //   JSON.stringify(data.rating.count),
-    //   JSON.stringify(data.rating.rate),
-    //   JSON.stringify(data.title),
+    // JSON.stringify(data.id),
+    // JSON.stringify(data.category),
+    // JSON.stringify(data.description),
+    // JSON.stringify(data.image),
+    // JSON.stringify(data.price),
+    // JSON.stringify(data.rating.count),
+    // JSON.stringify(data.rating.rate),
+    // JSON.stringify(data.title),
     // ];
 
     const card = ` <div id="card" class="rounded-2xl bg-slate-900 w-96 h-max m-3">
@@ -193,7 +194,7 @@ const fetchData = async () => {
        <button
         id="${data.id}"
         class="font-bold btn text-black p-2 rounded-lg w-full bg-sky-400 mt-6 moreInfoBtn"
-        onclick="togler(${image})"
+        onclick="togler(${JSON.stringify(data)})"
       > 
         more info...
       </button>
@@ -206,12 +207,17 @@ const fetchData = async () => {
   });
 };
 
+fetchData();
+
 const productPage = document.getElementById("product-page");
 const btnBox = document.getElementById("moreInfoBtnBox");
 console.log(btnBox);
 
-window.togler = function (image) {
-  JSON.parse(image)
+// window.togler = function (category) {
+//   JSON.parse(category)
+// };
+
+window.togler = (category) => {
+  console.log(category);
 };
 
-fetchData();
