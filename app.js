@@ -34,6 +34,7 @@ let mainPage = document.getElementById("mainPage");
 const loginLink = document.getElementById("loginLink");
 const signUpLink = document.getElementById("signUpLink");
 
+
 const routing = () => {
   if (signUpPageDisplay == true) {
     signUpPage.style.display = "block";
@@ -148,6 +149,9 @@ function logout() {
 // -------------------fetching Data------------------------
 
 const cardBox = document.getElementById("cardBox");
+const modalTitle = document.getElementById("modal-title");
+const modalBody = document.getElementById("modal-body");
+const staticModal = document.getElementById("static-modal");
 
 const fetchData = async () => {
   let data;
@@ -157,57 +161,60 @@ const fetchData = async () => {
       data = res;
     });
 
-  data.forEach((data, index) => {
-    // const productOBJ = [data]
-    // console.log(productOBJ[0]);  
-
-    // const productData = [
-    // JSON.stringify(data.id),
-    // JSON.stringify(data.category),
-    // JSON.stringify(data.description),
-    // JSON.stringify(data.image),
-    // JSON.stringify(data.price),
-    // JSON.stringify(data.rating.count),
-    // JSON.stringify(data.rating.rate),
-    // JSON.stringify(data.title),
-    // ];
-
-    const card = ` <div id="card" class="rounded-2xl bg-slate-900 w-96 h-max m-3">
-    <div>
-      <img 
-        src=${data.image}
-        alt=""
-        class="w-full rounded-t-2xl h-96"
-      />
-    </div>
-    <div class="p-5">
-      <p class="text-xl font-bold">${data.title}</p>
-      <p class="text-lg font-bold">$25</p>
-      <p class="text-lg">
-        ${
-          data.description.length > 100
-            ? data.description.slice(0, 200)
-            : data.description
-        }
-      </p>
-      <div id="moreInfoBtnBox" class="flex items-end">
-       <button
-        id="${data.id}"
-        class="font-bold btn text-black p-2 rounded-lg w-full bg-sky-400 mt-6 moreInfoBtn"
-        onclick="togler(${JSON.stringify(data)})"
-      > 
-        more info...
-      </button>
+  data.forEach((product) => {
+    const card = `
+      <div id="card" class="rounded-2xl bg-slate-900 w-64 h-auto m-3">
+        <div>
+          <img src="${product.image}" alt="" class="w-full rounded-t-2xl h-60" />
+        </div>
+        <div class="p-5 flex flex-col content-evenly">
+        <div class="h-24">
+          <p class="text-xl font-bold">${product.title.length > 50 ? product.title.slice(0, 10): product.title} </p>
+          <p class="text-sm font-bold mt-2">$${product.price}</p>
+          </div>
+          <div class="flex items-end mt-6">
+            <button class="font-bold btn text-black p-2 rounded-lg w-full bg-sky-400" onclick="showProductDetails(${product.id})">
+              more info...
+            </button>
+          </div>
+        </div>
       </div>
-     
-    </div>
-  </div>`;
-
+    `;
     cardBox.innerHTML += card;
   });
 };
 
 fetchData();
+
+window.showProductDetails = async (productId) => {
+  let product;
+  await fetch(`https://fakestoreapi.com/products/${productId}`)
+    .then((res) => res.json())
+    .then((res) => {
+      product = res;
+    });
+
+  modalTitle.innerText = product.title;
+  modalBody.innerHTML = `
+  <img src="${product.image}" alt="${product.title}" class="w-full rounded-2xl" />
+    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">${product.description}</p>
+    <p class="text-lg font-bold">$${product.price}</p>
+  `;
+
+  // Show the modal
+  staticModal.classList.remove('hidden');
+  staticModal.classList.add('flex');
+};
+
+// Event listener to hide the modal
+staticModal.addEventListener('click', (e) => {
+  console.log(e.target);
+  if (e.target === staticModal || e.target.dataset.modalHide === 'static-modal') {
+    console.log(e);
+    staticModal.classList.add('hidden');
+    staticModal.classList.remove('flex');
+  }
+});
 
 const productPage = document.getElementById("product-page");
 const btnBox = document.getElementById("moreInfoBtnBox");
@@ -217,7 +224,14 @@ console.log(btnBox);
 //   JSON.parse(category)
 // };
 
-window.togler = (category) => {
-  console.log(category);
-};
+window.togler = async (praductId) => {
+  let product;
+  console.log(praductId);
+  await fetch(`https://fakestoreapi.com/products/${praductId}`)
+    .then((res) => res.json())
+    .then((res) => {
+      product = res;
+    });
 
+  console.log(product);
+};
