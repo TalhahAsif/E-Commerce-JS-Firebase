@@ -1,27 +1,17 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
 import {
-  getAuth,
   onAuthStateChanged,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  collection,
+  addDoc,
   signOut,
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  getAuth,
+  app,
+  db,
+  auth,
+} from "./firebase.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyB1vHKXx2fq4_n3SovJ3lN4fUmu0MTcezQ",
-  authDomain: "my-1001-project.firebaseapp.com",
-  projectId: "my-1001-project",
-  storageBucket: "my-1001-project.appspot.com",
-  messagingSenderId: "805674283226",
-  appId: "1:805674283226:web:50a6b83d0d5ece8bb1f5e3",
-  measurementId: "G-SXZTJF026S",
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const auth = getAuth(app);
+console.log(onAuthStateChanged);
 
 let signUpPageDisplay = false;
 let loginPageDisplay = false;
@@ -76,12 +66,19 @@ const signupBTN = document.getElementById("signupBTN");
 
 signupBTN.addEventListener("click", createUserAccount);
 
+const logOutBTN = document.getElementById("LogOutBTN");
+const mainPageLogInBTN = document.getElementById("LogInBTN");
+
 onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log("User is Logged in");
     const uid = user.uid;
+    mainPageLogInBTN.style.display = "none";
+    logOutBTN.style.display = "block";
   } else {
     console.log("User is not Logged in");
+    mainPageLogInBTN.style.display = "block";
+    logOutBTN.style.display = "none";
   }
 });
 
@@ -110,9 +107,16 @@ const loginBTN = document.getElementById("LoginBTN");
 
 loginBTN.addEventListener("click", loginUser);
 
+let currentuser;
+
+console.log("currentuser",currentuser);
+
 function loginUser() {
   signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value)
     .then((userCredential) => {
+      console.log(userCredential.user.email);
+      currentuser = userCredential.user.email;
+      console.log(currentuser);
       // Signed in
       const user = userCredential.user;
       loginPageDisplay = false;
@@ -128,9 +132,8 @@ function loginUser() {
     });
 }
 
-const logOutBTN = document.getElementById("LogOutBTN");
-
 logOutBTN.addEventListener("click", logout);
+mainPageLogInBTN.addEventListener("click", mainPagelogin);
 
 function logout() {
   signOut(auth)
@@ -143,6 +146,13 @@ function logout() {
     .catch((error) => {
       // An error happened.
     });
+}
+
+function mainPagelogin() {
+  console.log("click");
+  loginPageDisplay = true;
+  mainPageDisplay = false;
+  routing();
 }
 
 // -------------------fetching Data------------------------
@@ -236,18 +246,17 @@ window.showProductDetails = async (productId) => {
       product.price
     }</p>
     <section class="flex justify-between flex">
-      <div class="flex gap-3 items-center">
-                <button id="increament" onclick='quantityCounter("incr")' class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">+</button>
+      <div class="flex items-center gap-6">
+                <button id="increament" onclick='quantityCounter("incr")' class="text-3xl text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg font-bolder px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">+</button>
                  <p id="quantity" class="text-3xl font-bold text-gray-900 dark:text-white">${quantityCount}</p>
-                 <button id="decreament" onclick='quantityCounter("decr")' class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">-
+                 <button id="decreament" onclick='quantityCounter("decr")' class="text-3xl text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg font-bolder px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">-
                  </button>
       </div>
       <div class="flex gap-3 items-center p-4 md:p-5 rounded-b">
                 <button data-modal-hide="static-modal" type="button" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Close</button>
-                <button data-modal-hide="static-modal" type="button" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"> Add to Cart</button>
+                <button id="addToCart_BTN" data-modal-hide="static-modal" type="button" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"> Add to Cart</button>
               </div>
     </section>
-
     </div>
   `;
 
@@ -274,7 +283,7 @@ window.showProductDetails = async (productId) => {
       quantityCount--;
     }
     quantity.innerHTML = quantityCount;
-    disableFunc()
+    disableFunc();
   };
 
   decreament.disabled = true;
@@ -282,10 +291,24 @@ window.showProductDetails = async (productId) => {
   const disableFunc = () => {
     if (quantityCount == 0) {
       decreament.disabled = true;
-    }else{
+    } else {
       decreament.disabled = false;
     }
   };
+
+  const addToCart_BTN = document.getElementById("addToCart_BTN");
+
+  console.log("addToCart_BTN", addToCart_BTN);
+
+  addToCart_BTN.addEventListener("click", async (e)=>{
+    console.log(currentuser);
+    console.log(product);
+    // const docRef = await addDoc(collection(db, "product"), {
+    //   email: currentuser,
+    //   product: product,
+    // });
+    // console.log("Document written with ID: ", docRef.id);
+  })
 };
 
 // Event listener to hide the modal
@@ -294,7 +317,6 @@ staticModal.addEventListener("click", (e) => {
     e.target === staticModal ||
     e.target.dataset.modalHide === "static-modal"
   ) {
-    console.log(e);
     staticModal.classList.add("hidden");
     staticModal.classList.remove("flex");
   }
