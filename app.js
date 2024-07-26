@@ -9,6 +9,7 @@ import {
   app,
   db,
   auth,
+  setDoc,
 } from "./firebase.js";
 
 console.log(onAuthStateChanged);
@@ -16,13 +17,16 @@ console.log(onAuthStateChanged);
 let signUpPageDisplay = false;
 let loginPageDisplay = false;
 let mainPageDisplay = true;
-let ProductPage = false;
+let cartPageDisplay = false
 
 let signUpPage = document.getElementById("signUpPage");
 let loginPage = document.getElementById("LoginPage");
 let mainPage = document.getElementById("mainPage");
+let cartPage = document.getElementById("cartPage")
+
 const loginLink = document.getElementById("loginLink");
 const signUpLink = document.getElementById("signUpLink");
+
 
 const routing = () => {
   if (signUpPageDisplay == true) {
@@ -42,6 +46,10 @@ const routing = () => {
   } else {
     mainPage.style.display = "none";
   }
+
+  if(cartPageDisplay == true){
+    cartPage.style.display = "block"
+  }
 };
 
 routing();
@@ -50,6 +58,7 @@ loginLink.addEventListener("click", () => {
   loginPageDisplay = true;
   signUpPageDisplay = false;
   mainPageDisplay = false;
+  cartPageDisplay = false
   routing();
 });
 
@@ -57,6 +66,7 @@ signUpLink.addEventListener("click", () => {
   loginPageDisplay = false;
   signUpPageDisplay = true;
   mainPageDisplay = false;
+  cartPageDisplay = false
   routing();
 });
 
@@ -69,8 +79,11 @@ signupBTN.addEventListener("click", createUserAccount);
 const logOutBTN = document.getElementById("LogOutBTN");
 const mainPageLogInBTN = document.getElementById("LogInBTN");
 
+let currentUser;
+
 onAuthStateChanged(auth, (user) => {
   if (user) {
+    currentUser = user;
     console.log("User is Logged in");
     const uid = user.uid;
     mainPageLogInBTN.style.display = "none";
@@ -82,10 +95,12 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
+console.log(currentUser);
+
 function createUserAccount() {
   createUserWithEmailAndPassword(auth, signInEmail.value, signInPassword.value)
     .then((userCredential) => {
-      console.log(userCredential);
+      localStorage.setItem("currentUser", signInEmail.value);
       const user = userCredential.user;
       signUpPageDisplay = false;
       mainPageDisplay = true;
@@ -107,16 +122,10 @@ const loginBTN = document.getElementById("LoginBTN");
 
 loginBTN.addEventListener("click", loginUser);
 
-let currentuser;
-
-console.log("currentuser",currentuser);
-
 function loginUser() {
   signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value)
     .then((userCredential) => {
-      console.log(userCredential.user.email);
-      currentuser = userCredential.user.email;
-      console.log(currentuser);
+      localStorage.setItem("currentUser", loginEmail.value);
       // Signed in
       const user = userCredential.user;
       loginPageDisplay = false;
@@ -138,6 +147,7 @@ mainPageLogInBTN.addEventListener("click", mainPagelogin);
 function logout() {
   signOut(auth)
     .then(() => {
+      localStorage.removeItem("currentUser");
       // Sign-out successful.
       loginPageDisplay = true;
       mainPageDisplay = false;
@@ -300,15 +310,20 @@ window.showProductDetails = async (productId) => {
 
   console.log("addToCart_BTN", addToCart_BTN);
 
-  addToCart_BTN.addEventListener("click", async (e)=>{
-    console.log(currentuser);
-    console.log(product);
-    // const docRef = await addDoc(collection(db, "product"), {
-    //   email: currentuser,
-    //   product: product,
-    // });
-    // console.log("Document written with ID: ", docRef.id);
-  })
+  addToCart_BTN.addEventListener("click", async (e) => {
+    const currentUser = localStorage.getItem("currentUser");
+    console.log(currentUser);
+    if (!currentUser) {
+      alert("Please Sign Up to continue");
+    } else {
+      const docRef = await addDoc(collection(db, "product"), {
+        email: currentUser,
+        product: product,
+        quantity: quantityCount,
+      });
+      console.log("Document written with ID: ", docRef.id);
+    }
+  });
 };
 
 // Event listener to hide the modal
