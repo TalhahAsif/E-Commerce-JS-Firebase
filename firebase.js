@@ -4,7 +4,8 @@ import {
   getFirestore,
   collection,
   addDoc,
-  setDoc
+  setDoc,
+  getDocs 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 console.log(getFirestore);
@@ -45,4 +46,5 @@ export {
   collection,
   addDoc,
   setDoc,
+  getDocs 
 };

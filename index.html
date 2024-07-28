@@ -1,159 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link
-    href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css"
-    rel="stylesheet"
-    />
-  </head>
-  <body class="bg-slate-950 text-gray-400 absolute">
-    <!-- ///////////////////////Sign Up Page//////////////////////// -->
 
-    <section id="signUpPage">
-      <div class="flex justify-center items-center relative h-screen w-screen">
-        <div class="p-6 w-1/2 rounded-lg bg-transparent">
-          <p class="text-center text-3xl m-6 mb-5 font-bold">Sign up</p>
-          <div class="flex flex-col mt-6">
-            <!-- <label for="signInemail">Email</label> -->
-            <input
-              id="signInEmail"
-              type="email"
-              class="bg-black p-3 m-2 rounded text-white"
-              placeholder="Email"
-            />
-            <!-- <label for="signInPassword">Password</label> -->
-            <input
-              id="signInPassword"
-              type="password"
-              class="bg-black p-3 m-2 rounded text-white"
-              placeholder="Password"
-            />
-          </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
 
-          <div class="m-2 mt-6">
-            <button
-            id="signupBTN"
-              type="submit"
-              class="font-bold btn text-black p-2 rounded-lg w-52 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500"
-            >
-              Sign Up
-            </button>
-            <p id="loginLink" class="cursor-pointer mt-3">
-              Do not have Account? Click here
-            </p>
-          </div>
+<body id="body" class="bg-slate-950 text-gray-400">
+  <!-- ///////////////////////Sign Up Page//////////////////////// -->
+
+  <section id="signUpPage">
+    <div class="flex justify-center items-center relative h-screen w-screen">
+      <div class="p-6 w-1/2 rounded-lg bg-transparent">
+        <p class="text-center text-3xl m-6 mb-5 font-bold">Sign up</p>
+        <div class="flex flex-col mt-6">
+          <!-- <label for="signInemail">Email</label> -->
+          <input id="signInEmail" type="email" class="bg-black p-3 m-2 rounded text-white" placeholder="Email" />
+          <!-- <label for="signInPassword">Password</label> -->
+          <input id="signInPassword" type="password" class="bg-black p-3 m-2 rounded text-white"
+            placeholder="Password" />
+        </div>
+
+        <div class="m-2 mt-6">
+          <button id="signupBTN" type="submit"
+            class="font-bold btn text-black p-2 rounded-lg w-52 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500">
+            Sign Up
+          </button>
+          <p id="loginLink" class="cursor-pointer mt-3">
+            Do not have Account? Click here
+          </p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ///////////////////////Login Page//////////////////////// -->
-    
-    <section id="LoginPage">
-      <div class="flex justify-center items-center h-screen w-screen">
-        <div class="p-6 w-1/2 rounded-lg bg-transparent">
-          <p class="text-center text-3xl m-6 mb-5 font-bold">LogIn</p>
-          <div class="flex flex-col mt-6">
-            <!-- <label for="signInemail">Email</label> -->
-            <input
-            id="LoginEmail"
-            type="email"
-            class="bg-black p-3 m-2 rounded text-white"
-            placeholder="Email"
-            />
-            <!-- <label for="signInPassword">Password</label> -->
-            <input
-            id="LoginPassword"
-              type="password"
-              class="bg-black p-3 m-2 rounded text-white"
-              placeholder="Password"
-              />
-          </div>
+  <!-- ///////////////////////Login Page//////////////////////// -->
 
-          <div class="m-2 mt-6">
-            <button
-            id="LoginBTN"
-            type="submit"
-            class="font-bold btn text-black p-2 rounded-lg w-52 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500"
-            >
+  <section id="LoginPage">
+    <div class="flex justify-center items-center h-screen w-screen">
+      <div class="p-6 w-1/2 rounded-lg bg-transparent">
+        <p class="text-center text-3xl m-6 mb-5 font-bold">LogIn</p>
+        <div class="flex flex-col mt-6">
+          <!-- <label for="signInemail">Email</label> -->
+          <input id="LoginEmail" type="email" class="bg-black p-3 m-2 rounded text-white" placeholder="Email" />
+          <!-- <label for="signInPassword">Password</label> -->
+          <input id="LoginPassword" type="password" class="bg-black p-3 m-2 rounded text-white"
+            placeholder="Password" />
+        </div>
+
+        <div class="m-2 mt-6">
+          <button id="LoginBTN" type="submit"
+            class="font-bold btn text-black p-2 rounded-lg w-52 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500">
             LogIn
           </button>
           <p id="signUpLink" class="cursor-pointer mt-3">
             Already have Account? Click here
           </p>
         </div>
-        </div>
       </div>
-    </section>
-    
-    <!-- ///////////////////////Main Page//////////////////////// -->
-    <section id="mainPage" class="h-full w-full z-0">
-      <div class="flex justify-around items-center">
-        <p class="text-center text-3xl m-6 mb-5 font-bold">Fake Store</p>
-        <section class="flex gap-6 items-center">
-          <p class="py-1 px-3 bg-red-700 text-white rounded-lg">talhahasif995@gmail.com</p>
-          <div class="flex gap-3">
-            <button
-            id="LogOutBTN"
-            class="font-bold btn text-black p-2 rounded-lg w-24 bg-red-600 text-white"
-          >
+    </div>
+  </section>
+
+  <!-- ///////////////////////Main Page//////////////////////// -->
+  <section id="mainPage" class="h-full w-full z-0">
+    <div class="flex justify-around items-center">
+      <p class="text-center text-3xl m-6 mb-5 font-bold">Fake Store</p>
+      <section class="flex gap-6 items-center">
+        <p id="userEmailBx" class="py-1 px-3 text-white rounded-lg bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></p>
+        <a href="./cart.html"> <i id="cartIcon" class="fa-solid fa-cart-shopping text-2xl"></i> </a>
+        <div class="flex gap-3">
+          <button id="LogOutBTN" class="font-extrabold text-black p-2 rounded-lg w-24 text-white bg-blue-600">
             Sign Out
           </button>
           <div>
-            <button
-            id="LogInBTN"
-            class="font-bold btn text-black p-2 rounded-lg w-24 bg-green-700"
-          >
-            Sign In
-          </button>
+            <button id="LogInBTN" class="font-extrabold text-white p-2 rounded-lg w-24 backdrop-blur-sm bg-blue-600">
+              Sign In
+            </button>
           </div>
-        </section>
-        
-      </div>
-      
-      <section class="flex justify-center items-center mt-6">
-          <div id="cardBox" class="flex flex-wrap justify-center gap-3"> </div>
+      </section>
+    </div>
 
-        <!-- Main modal -->
-        <div id="static-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-          <div class="relative p-4 w-full max-w-7xl max-h-full">
-            <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700 w-100">
-              <!-- Modal header -->
-              
-              <!-- Modal body -->
-              <div id="modal-body" class="p-4 md:p-5 space-y-4 flex gap-5"></div>
-              <!-- Modal footer -->
-              
-            </div>
+    <section class="flex justify-center items-center mt-6">
+      <div id="cardBox" class="flex flex-wrap justify-center gap-3"> </div>
+
+      <!-- Main modal -->
+      <div id="static-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+        class="backdrop-blur-lg hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] h-dvh">
+        <div class="relative p-4 w-full max-w-7xl max-h-full">
+          <!-- Modal content -->
+          <div class="relative bg-white rounded-lg shadow dark:bg-gray-700 w-100">
+            <!-- Modal header -->
+
+            <!-- Modal body -->
+            <div id="modal-body" class="p-4 md:p-5 space-y-4 flex gap-5"></div>
+            <!-- Modal footer -->
+
           </div>
         </div>
-        
-
-
-      </section>
+      </div>
     </section>
-    
-    <!-------------------------------------Cart Page---------------------------------------->
-
-<section class="cartPage">
-  
-<div class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-  <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" src="/docs/images/blog/image-4.jpg" alt="">
-  <div class="flex flex-col justify-between p-4 leading-normal">
-      <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-      <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-  </div>
-</div>
-
-</section>
-
-   
   </section>
-  </body>
-  <script src="app.js" type= "module"></script>
-  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
+
+  <!-------------------------------------Cart Page---------------------------------------->
+
+  <section id="cartItems"></section>
+
+</body>
+<script src="app.js" type="module"></script>
+<script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
+
 </html>

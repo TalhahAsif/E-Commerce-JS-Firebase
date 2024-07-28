@@ -10,6 +10,7 @@ import {
   db,
   auth,
   setDoc,
+  getDocs, 
 } from "./firebase.js";
 
 console.log(onAuthStateChanged);
@@ -17,16 +18,18 @@ console.log(onAuthStateChanged);
 let signUpPageDisplay = false;
 let loginPageDisplay = false;
 let mainPageDisplay = true;
-let cartPageDisplay = false
 
 let signUpPage = document.getElementById("signUpPage");
 let loginPage = document.getElementById("LoginPage");
 let mainPage = document.getElementById("mainPage");
-let cartPage = document.getElementById("cartPage")
+let cartPage = document.getElementById("cartPage");
 
 const loginLink = document.getElementById("loginLink");
 const signUpLink = document.getElementById("signUpLink");
 
+let userEmailBx = document.getElementById("userEmailBx");
+
+userEmailBx.innerHTML = localStorage.getItem("currentUser");
 
 const routing = () => {
   if (signUpPageDisplay == true) {
@@ -46,10 +49,6 @@ const routing = () => {
   } else {
     mainPage.style.display = "none";
   }
-
-  if(cartPageDisplay == true){
-    cartPage.style.display = "block"
-  }
 };
 
 routing();
@@ -58,7 +57,6 @@ loginLink.addEventListener("click", () => {
   loginPageDisplay = true;
   signUpPageDisplay = false;
   mainPageDisplay = false;
-  cartPageDisplay = false
   routing();
 });
 
@@ -66,7 +64,6 @@ signUpLink.addEventListener("click", () => {
   loginPageDisplay = false;
   signUpPageDisplay = true;
   mainPageDisplay = false;
-  cartPageDisplay = false
   routing();
 });
 
@@ -79,11 +76,8 @@ signupBTN.addEventListener("click", createUserAccount);
 const logOutBTN = document.getElementById("LogOutBTN");
 const mainPageLogInBTN = document.getElementById("LogInBTN");
 
-let currentUser;
-
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    currentUser = user;
     console.log("User is Logged in");
     const uid = user.uid;
     mainPageLogInBTN.style.display = "none";
@@ -95,7 +89,7 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-console.log(currentUser);
+// console.log(currentUser);
 
 function createUserAccount() {
   createUserWithEmailAndPassword(auth, signInEmail.value, signInPassword.value)
@@ -168,6 +162,7 @@ function mainPagelogin() {
 // -------------------fetching Data------------------------
 
 const cardBox = document.getElementById("cardBox");
+const body = document.getElementById("body");
 // const modalTitle = document.getElementById("modal-title");
 const modalBody = document.getElementById("modal-body");
 const staticModal = document.getElementById("static-modal");
@@ -233,6 +228,8 @@ window.showProductDetails = async (productId) => {
     });
 
   let quantityCount = 0;
+
+  body.classList += " overflow-hidden";
 
   modalBody.innerHTML = `
   <img src="${product.image}" alt="${
@@ -334,6 +331,7 @@ staticModal.addEventListener("click", (e) => {
   ) {
     staticModal.classList.add("hidden");
     staticModal.classList.remove("flex");
+    body.classList.remove("overflow-hidden");
   }
 });
 
@@ -356,3 +354,31 @@ window.togler = async (praductId) => {
 
   console.log(product);
 };
+
+// ------------------------------------ Cart Page ------------------------------------
+
+const cartItemsBx = document.getElementById("cartItems")
+
+console.log(cartItemsBx);
+
+const displayCartItems = async ()=>{
+  const cartItems = await getDocs(collection(db, "product"))   
+  cartItems.forEach((items)=>{
+    console.log(items);
+    const itemCard = ` <div
+    class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+    <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
+      src="" alt="">
+    <div class="flex flex-col justify-between p-4 leading-normal">
+      <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology
+        acquisitions 2021</h5>
+      <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology
+        acquisitions of 2021 so far, in reverse chronological order.</p>
+    </div>
+  </div>`
+
+  cartItemsBx.innerHTML += itemCard 
+  })
+}
+ 
+displayCartItems()
