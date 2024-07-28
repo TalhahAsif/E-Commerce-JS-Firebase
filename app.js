@@ -10,7 +10,7 @@ import {
   db,
   auth,
   setDoc,
-  getDocs, 
+  getDocs,
 } from "./firebase.js";
 
 console.log(onAuthStateChanged);
@@ -254,10 +254,10 @@ window.showProductDetails = async (productId) => {
     }</p>
     <section class="flex justify-between flex">
       <div class="flex items-center gap-6">
-                <button id="increament" onclick='quantityCounter("incr")' class="text-3xl text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg font-bolder px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">+</button>
-                 <p id="quantity" class="text-3xl font-bold text-gray-900 dark:text-white">${quantityCount}</p>
-                 <button id="decreament" onclick='quantityCounter("decr")' class="text-3xl text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg font-bolder px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">-
-                 </button>
+      <button id="decreament" onclick='quantityCounter("decr")' class="text-3xl text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg font-bolder px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">-
+      </button>
+      <p id="quantity" class="text-3xl font-bold text-gray-900 dark:text-white">${quantityCount}</p>
+      <button id="increament" onclick='quantityCounter("incr")' class="text-3xl text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg font-bolder px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">+</button>
       </div>
       <div class="flex gap-3 items-center p-4 md:p-5 rounded-b">
                 <button data-modal-hide="static-modal" type="button" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Close</button>
@@ -305,14 +305,15 @@ window.showProductDetails = async (productId) => {
 
   const addToCart_BTN = document.getElementById("addToCart_BTN");
 
-  console.log("addToCart_BTN", addToCart_BTN);
-
   addToCart_BTN.addEventListener("click", async (e) => {
     const currentUser = localStorage.getItem("currentUser");
     console.log(currentUser);
     if (!currentUser) {
       alert("Please Sign Up to continue");
+    } else if (quantityCount == 0) {
+      alert("Quantity must be more then 1");
     } else {
+      alert("product added to cart succesfully")
       const docRef = await addDoc(collection(db, "product"), {
         email: currentUser,
         product: product,
@@ -320,6 +321,7 @@ window.showProductDetails = async (productId) => {
       });
       console.log("Document written with ID: ", docRef.id);
     }
+
   });
 };
 
@@ -356,29 +358,3 @@ window.togler = async (praductId) => {
 };
 
 // ------------------------------------ Cart Page ------------------------------------
-
-const cartItemsBx = document.getElementById("cartItems")
-
-console.log(cartItemsBx);
-
-const displayCartItems = async ()=>{
-  const cartItems = await getDocs(collection(db, "product"))   
-  cartItems.forEach((items)=>{
-    console.log(items);
-    const itemCard = ` <div
-    class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-    <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
-      src="" alt="">
-    <div class="flex flex-col justify-between p-4 leading-normal">
-      <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology
-        acquisitions 2021</h5>
-      <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology
-        acquisitions of 2021 so far, in reverse chronological order.</p>
-    </div>
-  </div>`
-
-  cartItemsBx.innerHTML += itemCard 
-  })
-}
- 
-displayCartItems()
