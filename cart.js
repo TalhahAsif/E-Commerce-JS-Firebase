@@ -7,10 +7,11 @@ userEmailBx.innerHTML = localStorage.getItem("currentUser");
 
 const displayCartItems = async () => {
   let totalAm = 0;
-
   const cartItems = await getDocs(collection(db, "product"));
   cartItems.forEach((items) => {
+    console.log(items);
     const itemKey = items._document.key.path.segments[6];
+    console.log(itemKey);
     totalAm += items.data().product.price * items.data().quantity;
     console.log(totalAm.toFixed(2));
     const currentEmail = localStorage.getItem("currentUser");
@@ -35,7 +36,7 @@ const displayCartItems = async () => {
       }</span></p>
             </div>
         </section>
-      <button id="deleteItemBTN" onclick="deleteItem()" class="bg-red-600 text-white rounded p-3 w-2/5">delete</button>
+      <button id="deleteItemBTN" value='${itemKey}' class="bg-red-600 text-white rounded p-3 w-2/5">delete</button>
         </div>
       </div>`;
       if (!cartItems.docs) {
@@ -44,15 +45,19 @@ const displayCartItems = async () => {
       cartItemsBx.innerHTML += itemCard;
     }
   });
-
-  const totalAmBx = document.getElementById("totalAm");
-
-  totalAmBx.innerHTML = `total Amount : $${totalAm.toFixed(2)}`;
-
-  const deleteItemBTN = document.getElementById("deleteItemBTN");
-  const deleteItem = async (itemKey) => {
-    await deleteDoc(doc(db, "product" , itemKey));
-  };
+    
+    const totalAmBx = document.getElementById("totalAm");
+    
+    totalAmBx.innerHTML = `total Amount : $${totalAm.toFixed(2)}`;
+    
+    const deleteItemBTN = document.getElementById("deleteItemBTN");
+    
+ deleteItemBTN &&   deleteItemBTN.addEventListener("click", async (e) => {
+      const itemId = e.target.value;
+      await deleteDoc(doc(db, "product" , itemId));
+      console.log("deleted");
+      displayCartItems()
+    });
 };
 
 displayCartItems();

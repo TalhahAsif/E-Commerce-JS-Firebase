@@ -356,5 +356,3 @@ window.togler = async (praductId) => {
 
   console.log(product);
 };
-
-// ------------------------------------ Cart Page ------------------------------------

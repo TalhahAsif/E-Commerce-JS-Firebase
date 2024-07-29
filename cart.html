@@ -16,6 +16,16 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+
+    <style>
+      *{
+        font-family: poppins;
+      }
+    </style>
+
   </head>
   <body class="bg-slate-950 text-gray-400">
     <section id="cartPage" class="">
@@ -31,9 +41,11 @@
           ></a>
         </section>
       </div>
-      <section id="cartItems" class="flex flex-wrap justify-center gap-5 w-full p-6 mt-6"></section>
+      <div class="">
+        <section id="cartItems" class="flex flex-wrap justify-center gap-5 w-full p-6 mt-6"></section>
+      </div>
 
-      <div class="flex items-center justify-between sticky bottom-0 bg-gray-700 w-full px-6">
+      <div class="flex items-center justify-between sticky bottom-0.5 bg-gray-700 w-full px-6 ">
         <p id="totalAm" class="text-3xl font-bold text-white"></p>
         <button class="text-2xl bg-green-600 px-5 py-3 text-black rounded-lg m-6">Purchase</button>
       </div>
